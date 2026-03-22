@@ -1,0 +1,84 @@
+:root {
+    color-scheme: light;
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --border: #d9e2f0;
+    --text: #172133;
+    --muted: #61708a;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --success: #d1fae5;
+    --success-text: #065f46;
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem 3rem;
+    background: linear-gradient(135deg, #0f172a, #1d4ed8);
+    color: #fff;
+}
+
+.eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; opacity: .8; }
+.subtitle { max-width: 46rem; color: rgba(255,255,255,.85); }
+.account-box { align-self: center; display: grid; gap: .75rem; justify-items: end; }
+.signed-in { margin: 0; }
+.page-shell { padding: 2rem 3rem 3rem; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
+}
+.card-header { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
+.helper-text, .empty-state { color: var(--muted); }
+.entry-form { display: grid; gap: .75rem; }
+.entry-form input {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: .85rem 1rem;
+    font: inherit;
+}
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 999px;
+    padding: .85rem 1.2rem;
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+.button:hover { background: var(--primary-dark); }
+.button.secondary { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28); }
+.status-banner {
+    margin-bottom: 1rem;
+    background: var(--success);
+    color: var(--success-text);
+    border-radius: 12px;
+    padding: .85rem 1rem;
+}
+.badge { background: #dbeafe; color: #1d4ed8; border-radius: 999px; padding: .4rem .75rem; font-weight: 700; }
+.entries-table { width: 100%; border-collapse: collapse; }
+.entries-table th, .entries-table td { text-align: left; padding: .75rem; border-bottom: 1px solid var(--border); }
+.validation-summary, .field-validation { color: #b91c1c; }
+
+@media (max-width: 768px) {
+    .app-header, .page-shell { padding: 1.25rem; }
+    .app-header { flex-direction: column; }
+    .account-box { justify-items: start; }
+}

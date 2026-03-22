@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FoodCalendar</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="app-header">
+        <div>
+            <p class="eyebrow">Azure App Service (Windows) validation app</p>
+            <h1>FoodCalendar</h1>
+            <p class="subtitle">Entra ID 認証済みユーザーが当日の食事を記録し、当週分を一覧できる検証アプリです。</p>
+        </div>
+        <div class="account-box">
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <p class="signed-in">Signed in as <strong>@User.Identity?.Name</strong></p>
+                <a class="button secondary" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignOut">Sign out</a>
+            }
+            else
+            {
+                <a class="button" asp-area="MicrosoftIdentity" asp-controller="Account" asp-action="SignIn">Sign in</a>
+            }
+        </div>
+    </header>
+
+    <main class="page-shell">
+        @RenderBody()
+    </main>
+</body>
+</html>

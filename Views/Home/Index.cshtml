@@ -1,0 +1,47 @@
+@model FoodCalendarViewModel
+@{
+    ViewData["Title"] = "FoodCalendar";
+}
+
+<section class="card-grid">
+    <section class="card">
+        <h2>登録フォーム</h2>
+        <p class="helper-text">初回アクセス時に Entra ID サインインを要求し、サインイン済みユーザーのみ登録できます。</p>
+
+        @if (TempData["StatusMessage"] is string statusMessage)
+        {
+            <div class="status-banner">@statusMessage</div>
+        }
+
+        <form asp-controller="Entries" asp-action="Create" method="post" class="entry-form">
+            <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
+
+            <label asp-for="EntryDate"></label>
+            <input asp-for="EntryDate" />
+
+            <label asp-for="FoodName"></label>
+            <input asp-for="FoodName" placeholder="例: Chicken salad" />
+            <span asp-validation-for="FoodName" class="field-validation"></span>
+
+            <label asp-for="Amount"></label>
+            <input asp-for="Amount" placeholder="例: 150g / 1 bowl" />
+            <span asp-validation-for="Amount" class="field-validation"></span>
+
+            <button type="submit" class="button">登録する</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="card-header">
+            <div>
+                <h2>当週の登録データ</h2>
+                <p class="helper-text">@Model.WeekStart.ToString("yyyy-MM-dd") ～ @Model.WeekEnd.ToString("yyyy-MM-dd")</p>
+            </div>
+            <span class="badge">@Model.WeeklyEntries.Count 件</span>
+        </div>
+
+        <div id="weekly-entries">
+            @await Html.PartialAsync("_WeeklyEntries", Model.WeeklyEntries)
+        </div>
+    </section>
+</section>

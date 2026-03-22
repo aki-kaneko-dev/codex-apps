@@ -1,0 +1,32 @@
+@model IReadOnlyList<FoodCalendar.Models.FoodEntry>
+
+@if (Model.Count == 0)
+{
+    <p class="empty-state">まだ今週の登録はありません。</p>
+}
+else
+{
+    <table class="entries-table">
+        <thead>
+            <tr>
+                <th>日付</th>
+                <th>食べ物名</th>
+                <th>量</th>
+                <th>登録者</th>
+                <th>登録日時 (UTC)</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var entry in Model)
+        {
+            <tr>
+                <td>@entry.EntryDate.ToString("yyyy-MM-dd")</td>
+                <td>@entry.FoodName</td>
+                <td>@entry.Amount</td>
+                <td>@(string.IsNullOrWhiteSpace(entry.UserPrincipalName) ? entry.UserObjectId : entry.UserPrincipalName)</td>
+                <td>@entry.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
