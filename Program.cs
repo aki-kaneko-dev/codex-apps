@@ -12,9 +12,10 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews()
     .AddMicrosoftIdentityUI();
 
+builder.Services.AddRazorPages();
+
 builder.Services.AddSingleton<SqlConnectionFactory>();
 builder.Services.AddScoped<FoodEntryRepository>();
-
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
