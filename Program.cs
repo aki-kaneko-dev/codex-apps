@@ -1,4 +1,3 @@
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.Identity.Web.UI;
 using FoodCalendar.Services;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -14,14 +13,9 @@ builder.Services.AddControllersWithViews()
     .AddMicrosoftIdentityUI();
 
 
-builder.Services.Configure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
-{
-    options.ResponseType = OpenIdConnectResponseType.Code;
-    options.UsePkce = true;
-});
-
 builder.Services.AddSingleton<SqlConnectionFactory>();
 builder.Services.AddScoped<FoodEntryRepository>();
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
