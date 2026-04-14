@@ -5,6 +5,17 @@ namespace FoodCalendar.Services;
 
 public sealed class FoodEntryRepository
 {
+    private sealed class FoodEntryRow
+    {
+        public int Id { get; init; }
+        public string UserObjectId { get; init; } = string.Empty;
+        public string? UserPrincipalName { get; init; }
+        public DateTime EntryDate { get; init; }
+        public string FoodName { get; init; } = string.Empty;
+        public string Amount { get; init; } = string.Empty;
+        public DateTime CreatedAt { get; init; }
+    }
+
     private readonly SqlConnectionFactory _connectionFactory;
 
     public FoodEntryRepository(SqlConnectionFactory connectionFactory)
@@ -48,12 +59,21 @@ public sealed class FoodEntryRepository
             """;
 
         await using var connection = await _connectionFactory.CreateOpenConnectionAsync(cancellationToken);
-        var rows = await connection.QueryAsync<FoodEntry>(new CommandDefinition(sql, new
+        var rows = await connection.QueryAsync<FoodEntryRow>(new CommandDefinition(sql, new
         {
             UserObjectId = userObjectId,
             WeekStart = weekStart.ToDateTime(TimeOnly.MinValue)
         }, cancellationToken: cancellationToken));
 
-        return rows.ToList();
+        return rows.Select(row => new FoodEntry
+        {
+            Id = row.Id,
+            UserObjectId = row.UserObjectId,
+            UserPrincipalName = row.UserPrincipalName,
+            EntryDate = DateOnly.FromDateTime(row.EntryDate),
+            FoodName = row.FoodName,
+            Amount = row.Amount,
+            CreatedAt = row.CreatedAt
+        }).ToList();
     }
 }

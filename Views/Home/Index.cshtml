@@ -12,6 +12,10 @@
         {
             <div class="status-banner">@statusMessage</div>
         }
+        @if (ViewData["ErrorMessage"] is string errorMessage)
+        {
+            <div class="validation-summary">@errorMessage</div>
+        }
 
         <form asp-controller="Entries" asp-action="Create" method="post" class="entry-form">
             <div asp-validation-summary="ModelOnly" class="validation-summary"></div>
@@ -37,11 +41,3 @@
                 <h2>当週の登録データ</h2>
                 <p class="helper-text">@Model.WeekStart.ToString("yyyy-MM-dd") ～ @Model.WeekEnd.ToString("yyyy-MM-dd")</p>
             </div>
-            <span class="badge">@Model.WeeklyEntries.Count 件</span>
-        </div>
-
-        <div id="weekly-entries">
-            @await Html.PartialAsync("_WeeklyEntries", Model.WeeklyEntries)
-        </div>
-    </section>
-</section>
