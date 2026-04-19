@@ -1,12 +1,16 @@
 @model FoodCalendarViewModel
 @{
     ViewData["Title"] = "FoodCalendar";
+    var weekDates = Enumerable.Range(0, 7).Select(offset => Model.WeekStart.AddDays(offset)).ToList();
 }
 
 <section class="card-grid">
     <section class="card">
-        <h2>登録フォーム</h2>
-        <p class="helper-text">初回アクセス時に Entra ID サインインを要求し、サインイン済みユーザーのみ登録できます。</p>
+        <div class="form-title-row">
+            <h2>登録フォーム</h2>
+            <div class="food-illustration" aria-hidden="true">🥗🍎🍞</div>
+        </div>
+        <p class="helper-text">サインイン済みユーザーの食事データを記録し、カレンダーで視覚的に確認できます。</p>
 
         @if (TempData["StatusMessage"] is string statusMessage)
         {
@@ -27,6 +31,14 @@
             <input asp-for="Amount" placeholder="例: 150g / 1 bowl" />
             <span asp-validation-for="Amount" class="field-validation"></span>
 
+            <label asp-for="Calories"></label>
+            <input asp-for="Calories" type="number" min="1" max="5000" />
+            <span asp-validation-for="Calories" class="field-validation"></span>
+
+            <label asp-for="TargetCalories"></label>
+            <input asp-for="TargetCalories" type="number" min="1" max="5000" />
+            <span asp-validation-for="TargetCalories" class="field-validation"></span>
+
             <button type="submit" class="button">登録する</button>
         </form>
     </section>
@@ -34,14 +46,49 @@
     <section class="card">
         <div class="card-header">
             <div>
-                <h2>当週の登録データ</h2>
+                <h2>当週の登録カレンダー</h2>
                 <p class="helper-text">@Model.WeekStart.ToString("yyyy-MM-dd") ～ @Model.WeekEnd.ToString("yyyy-MM-dd")</p>
             </div>
             <span class="badge">@Model.WeeklyEntries.Count 件</span>
         </div>
 
-        <div id="weekly-entries">
-            @await Html.PartialAsync("_WeeklyEntries", Model.WeeklyEntries)
+        <div class="calendar-grid">
+            @foreach (var day in weekDates)
+            {
+                var dayEntries = Model.WeeklyEntries.Where(entry => entry.EntryDate == day).ToList();
+                <article class="calendar-day">
+                    <h3>@day.ToString("MM/dd") <small>(@day.DayOfWeek)</small></h3>
+
+                    @if (dayEntries.Count == 0)
+                    {
+                        <p class="empty-state">登録なし</p>
+                    }
+                    else
+                    {
+                        <ul class="entry-list">
+                            @foreach (var entry in dayEntries)
+                            {
+                                var trendClass = entry.Calories == entry.TargetCalories
+                                    ? "trend-equal"
+                                    : entry.Calories > entry.TargetCalories
+                                        ? "trend-over"
+                                        : "trend-under";
+
+                                <li>
+                                    <div class="entry-main">
+                                        <strong>@entry.FoodName</strong>
+                                        <span class="muted">@entry.Amount</span>
+                                    </div>
+                                    <div class="entry-calorie">
+                                        <span class="trend @trendClass" title="目標 @entry.TargetCalories kcal 比較">@entry.CalorieTrendSymbol</span>
+                                        <span>@entry.Calories kcal / 目標 @entry.TargetCalories kcal</span>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                </article>
+            }
         </div>
     </section>
 </section>

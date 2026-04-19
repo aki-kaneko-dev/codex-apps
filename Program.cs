@@ -12,6 +12,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllersWithViews()
     .AddMicrosoftIdentityUI();
 
+
 builder.Services.AddSingleton<SqlConnectionFactory>();
 builder.Services.AddScoped<FoodEntryRepository>();
 

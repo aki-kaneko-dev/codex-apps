@@ -18,6 +18,14 @@ public sealed class FoodCalendarViewModel
     [Display(Name = "量")]
     public string Amount { get; set; } = string.Empty;
 
+    [Range(1, 5000)]
+    [Display(Name = "摂取カロリー (kcal)")]
+    public int Calories { get; set; } = 600;
+
+    [Range(1, 5000)]
+    [Display(Name = "1食の目標カロリー (kcal)")]
+    public int TargetCalories { get; set; } = 650;
+
     public IReadOnlyList<FoodEntry> WeeklyEntries { get; set; } = Array.Empty<FoodEntry>();
     public DateOnly WeekStart { get; set; }
     public DateOnly WeekEnd { get; set; }

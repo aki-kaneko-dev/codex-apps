@@ -15,7 +15,7 @@
 body {
     margin: 0;
     font-family: "Segoe UI", sans-serif;
-    background: var(--bg);
+    background: radial-gradient(circle at top right, #eaf4ff 0%, #f4f7fb 55%);
     color: var(--text);
 }
 
@@ -33,7 +33,7 @@ body {
 .account-box { align-self: center; display: grid; gap: .75rem; justify-items: end; }
 .signed-in { margin: 0; }
 .page-shell { padding: 2rem 3rem 3rem; }
-.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+.card-grid { display: grid; grid-template-columns: minmax(320px, 1fr) minmax(480px, 1.3fr); gap: 1.5rem; align-items: start; }
 .card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -42,7 +42,7 @@ body {
     box-shadow: 0 12px 40px rgba(15, 23, 42, 0.08);
 }
 .card-header { display: flex; justify-content: space-between; gap: 1rem; align-items: start; }
-.helper-text, .empty-state { color: var(--muted); }
+.helper-text, .empty-state, .muted { color: var(--muted); }
 .entry-form { display: grid; gap: .75rem; }
 .entry-form input {
     border: 1px solid var(--border);
@@ -73,9 +73,88 @@ body {
     padding: .85rem 1rem;
 }
 .badge { background: #dbeafe; color: #1d4ed8; border-radius: 999px; padding: .4rem .75rem; font-weight: 700; }
-.entries-table { width: 100%; border-collapse: collapse; }
-.entries-table th, .entries-table td { text-align: left; padding: .75rem; border-bottom: 1px solid var(--border); }
 .validation-summary, .field-validation { color: #b91c1c; }
+
+.form-title-row { display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+.food-illustration {
+    font-size: 2rem;
+    background: linear-gradient(120deg, #ecfccb, #fde68a);
+    border: 1px solid #d9f99d;
+    border-radius: 999px;
+    padding: .3rem .8rem;
+}
+
+.calendar-grid {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: .8rem;
+}
+
+.calendar-day {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: .75rem;
+    background: #fdfefe;
+    min-height: 130px;
+}
+
+.calendar-day h3 {
+    margin: 0 0 .5rem;
+    font-size: 1rem;
+}
+
+.calendar-day h3 small {
+    font-size: .75rem;
+    color: var(--muted);
+}
+
+.entry-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .4rem;
+}
+
+.entry-list li {
+    border: 1px dashed #dbe5f4;
+    border-radius: 10px;
+    padding: .45rem .55rem;
+    background: #fff;
+}
+
+.entry-main {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
+}
+
+.entry-calorie {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    margin-top: .25rem;
+    font-size: .85rem;
+}
+
+.trend {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 999px;
+    font-weight: 700;
+}
+
+.trend-over { background: #fee2e2; color: #b91c1c; }
+.trend-under { background: #dcfce7; color: #15803d; }
+.trend-equal { background: #e0e7ff; color: #3730a3; }
+
+@media (max-width: 980px) {
+    .card-grid { grid-template-columns: 1fr; }
+}
 
 @media (max-width: 768px) {
     .app-header, .page-shell { padding: 1.25rem; }
