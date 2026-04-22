@@ -12,7 +12,8 @@ else
                 <th>日付</th>
                 <th>食べ物名</th>
                 <th>量</th>
-                <th>登録者</th>
+                <th>カロリー</th>
+                <th>比較</th>
                 <th>登録日時 (UTC)</th>
             </tr>
         </thead>
@@ -23,7 +24,8 @@ else
                 <td>@entry.EntryDate.ToString("yyyy-MM-dd")</td>
                 <td>@entry.FoodName</td>
                 <td>@entry.Amount</td>
-                <td>@(string.IsNullOrWhiteSpace(entry.UserPrincipalName) ? entry.UserObjectId : entry.UserPrincipalName)</td>
+                <td>@entry.Calories kcal / 目標 @entry.TargetCalories</td>
+                <td>@entry.CalorieTrendSymbol</td>
                 <td>@entry.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
             </tr>
         }

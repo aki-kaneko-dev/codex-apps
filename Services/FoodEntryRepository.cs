@@ -26,8 +26,8 @@ public sealed class FoodEntryRepository
     public async Task CreateEntryAsync(FoodEntry entry, CancellationToken cancellationToken = default)
     {
         const string sql = """
-            INSERT INTO dbo.FoodEntries (UserObjectId, UserPrincipalName, EntryDate, FoodName, Amount)
-            VALUES (@UserObjectId, @UserPrincipalName, @EntryDate, @FoodName, @Amount);
+            INSERT INTO dbo.FoodEntries (UserObjectId, UserPrincipalName, EntryDate, FoodName, Amount, Calories, TargetCalories)
+            VALUES (@UserObjectId, @UserPrincipalName, @EntryDate, @FoodName, @Amount, @Calories, @TargetCalories);
             """;
 
         await using var connection = await _connectionFactory.CreateOpenConnectionAsync(cancellationToken);
@@ -37,7 +37,9 @@ public sealed class FoodEntryRepository
             entry.UserPrincipalName,
             EntryDate = entry.EntryDate.ToDateTime(TimeOnly.MinValue),
             entry.FoodName,
-            entry.Amount
+            entry.Amount,
+            entry.Calories,
+            entry.TargetCalories
         }, cancellationToken: cancellationToken));
     }
 
@@ -50,6 +52,8 @@ public sealed class FoodEntryRepository
                    EntryDate,
                    FoodName,
                    Amount,
+                   Calories,
+                   TargetCalories,
                    CreatedAt
             FROM dbo.FoodEntries
             WHERE UserObjectId = @UserObjectId
