@@ -35,7 +35,9 @@ public sealed class EntriesController : Controller
                 ?? User.Identity?.Name,
             EntryDate = model.EntryDate,
             FoodName = model.FoodName.Trim(),
-            Amount = model.Amount.Trim()
+            Amount = model.Amount.Trim(),
+            Calories = model.Calories,
+            TargetCalories = model.TargetCalories
         };
 
         await _repository.CreateEntryAsync(entry, cancellationToken);

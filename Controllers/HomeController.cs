@@ -48,6 +48,8 @@ public sealed class HomeController : Controller
             EntryDate = today,
             FoodName = string.Empty,
             Amount = string.Empty,
+            Calories = 600,
+            TargetCalories = 650,
             WeeklyEntries = entries,
             WeekStart = weekStart,
             WeekEnd = weekStart.AddDays(6),
